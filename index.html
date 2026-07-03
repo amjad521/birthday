@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday, Moin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --wine:#6B0F2A;
+    --rose:#E85D75;
+    --rose-light:#F3A6B4;
+    --blush:#FBE4E8;
+    --ivory:#FFFBF6;
+    --gold:#C9A66B;
+    --ink:#3B1220;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{height:100%;}
+  body{
+    font-family:'Poppins',sans-serif;
+    color:var(--ink);
+    background:linear-gradient(180deg,var(--ivory) 0%,var(--blush) 40%,var(--rose-light) 100%);
+    overflow-x:hidden;
+    position:relative;
+  }
+
+  /* ---- Petals ---- */
+  .petal{
+    position:fixed;top:-40px;width:16px;height:16px;
+    background:var(--rose);border-radius:0 100% 0 100%;
+    opacity:0.7;pointer-events:none;z-index:1;
+    animation:fall linear forwards;
+  }
+  @keyframes fall{
+    0%{transform:translateY(0) rotate(0deg);}
+    100%{transform:translateY(110vh) rotate(360deg);}
+  }
+
+  /* ---- Brand mark (small corner label, not a menu) ---- */
+  .brand-mark{
+    position:fixed;top:22px;left:6vw;z-index:50;
+    font-family:'Playfair Display',serif;font-weight:600;font-size:1.05rem;color:var(--wine);
+    opacity:0.85;
+  }
+  .brand-mark span{color:var(--rose);}
+
+  /* ---- Page switching ---- */
+  .page{
+    display:none;
+    min-height:100vh;
+    padding-top:90px;
+    position:relative;
+    z-index:2;
+    animation:pageIn 0.6s ease;
+  }
+  .page.active{display:block;}
+  @keyframes pageIn{
+    from{opacity:0;transform:translateY(16px);}
+    to{opacity:1;transform:translateY(0);}
+  }
+
+  /* ---- Hero ---- */
+  .hero{
+    min-height:calc(100vh - 90px);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    text-align:center;padding:30px 6vw 60px;
+  }
+  .eyebrow{
+    text-transform:uppercase;letter-spacing:3px;font-size:0.78rem;
+    color:var(--rose);font-weight:500;margin-bottom:14px;
+  }
+  .name{
+    font-family:'Great Vibes',cursive;
+    font-size:clamp(3.2rem,10vw,6.5rem);
+    color:var(--wine);line-height:1;margin-bottom:8px;
+    text-shadow:0 4px 24px rgba(107,15,42,0.15);
+  }
+  .subtitle{
+    font-family:'Playfair Display',serif;font-style:italic;
+    font-size:clamp(1rem,2.5vw,1.3rem);color:var(--ink);opacity:0.75;margin-bottom:50px;
+  }
+
+  /* ---- Envelope ---- */
+  .envelope-wrap{perspective:1200px;margin-bottom:20px;}
+  .envelope{width:min(90vw,340px);height:220px;position:relative;cursor:pointer;}
+  .env-body{
+    position:absolute;inset:0;
+    background:linear-gradient(135deg,#fff 0%,var(--blush) 100%);
+    border-radius:10px;box-shadow:0 20px 45px rgba(107,15,42,0.25);overflow:hidden;
+  }
+  .env-body::before{
+    content:'';position:absolute;top:0;left:0;right:0;bottom:0;
+    background:
+      linear-gradient(to bottom right, transparent 49.6%, rgba(107,15,42,0.06) 50%, transparent 50.4%),
+      linear-gradient(to bottom left, transparent 49.6%, rgba(107,15,42,0.06) 50%, transparent 50.4%);
+  }
+  .env-flap{
+    position:absolute;top:0;left:0;right:0;height:110px;
+    background:linear-gradient(135deg,var(--rose) 0%,var(--wine) 100%);
+    clip-path:polygon(0 0,100% 0,50% 85%);
+    transform-origin:top;
+    transition:transform 0.9s cubic-bezier(.68,-0.4,.27,1.4);
+    z-index:5;box-shadow:0 6px 14px rgba(107,15,42,0.2);
+  }
+  .envelope.open .env-flap{transform:rotateX(180deg);z-index:1;}
+  .seal{
+    position:absolute;top:78px;left:50%;transform:translate(-50%,0);
+    width:52px;height:52px;
+    background:radial-gradient(circle at 35% 30%,var(--gold),#a9793a 75%);
+    border-radius:50%;display:flex;align-items:center;justify-content:center;
+    color:#fff8ec;font-family:'Playfair Display',serif;font-size:1.3rem;
+    box-shadow:0 4px 10px rgba(0,0,0,0.25);z-index:6;
+    transition:transform 0.5s ease, opacity 0.5s ease;
+    animation:pulse 2.4s ease-in-out infinite;
+  }
+  .envelope.open .seal{opacity:0;transform:translate(-50%,0) scale(0.3) rotate(25deg);}
+  @keyframes pulse{
+    0%,100%{box-shadow:0 4px 10px rgba(0,0,0,0.25),0 0 0 0 rgba(201,166,107,0.5);}
+    50%{box-shadow:0 4px 10px rgba(0,0,0,0.25),0 0 0 10px rgba(201,166,107,0);}
+  }
+  .letter-card{
+    position:absolute;left:6%;right:6%;bottom:10px;
+    background:var(--ivory);border:1px solid rgba(107,15,42,0.12);
+    border-radius:6px;padding:22px 20px 18px;text-align:left;
+    box-shadow:0 -4px 14px rgba(107,15,42,0.08);
+    transform:translateY(30px);opacity:0;
+    transition:transform 0.8s ease 0.5s, opacity 0.8s ease 0.5s;z-index:3;
+  }
+  .envelope.open .letter-card{transform:translateY(-58px);opacity:1;}
+  .letter-card p{
+    font-family:'Playfair Display',serif;font-style:italic;
+    font-size:0.95rem;line-height:1.6;color:var(--ink);
+  }
+  .tap-hint{
+    margin-top:18px;
+    font-size:0.8rem;
+    letter-spacing:1px;
+    color:var(--wine);
+    opacity:0.65;
+    text-transform:uppercase;
+    transition:opacity 0.5s ease;
+  }
+  .hero.opened .tap-hint{opacity:0;}
+
+  /* ---- Buttons (shared) ---- */
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:14px 34px;background:var(--wine);color:#fff8ec;
+    text-decoration:none;border-radius:30px;font-size:0.9rem;
+    letter-spacing:0.5px;box-shadow:0 10px 25px rgba(107,15,42,0.3);
+    transition:background 0.3s ease, transform 0.2s ease;
+    border:none;cursor:pointer;font-family:'Poppins',sans-serif;
+  }
+  .btn:hover{background:var(--rose);transform:translateY(-2px);}
+  .btn:active{transform:translateY(0);}
+  .hero .btn{
+    margin-top:34px;
+    opacity:0;
+    transform:translateY(14px);
+    pointer-events:none;
+    transition:opacity 0.7s ease, transform 0.7s ease, background 0.3s ease;
+  }
+  .hero.opened .btn{
+    opacity:1;
+    transform:translateY(0);
+    pointer-events:auto;
+  }
+
+  /* ---- Section heads ---- */
+  .page-head{text-align:center;padding:20px 6vw 30px;}
+  .title{font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,3rem);color:var(--wine);}
+  .title.script{font-family:'Great Vibes',cursive;font-size:clamp(2.6rem,7vw,4.2rem);}
+  .lede{font-family:'Playfair Display',serif;font-style:italic;opacity:0.7;margin-top:10px;font-size:1rem;}
+  .hint{font-size:0.8rem;opacity:0.55;margin-top:14px;letter-spacing:0.5px;}
+
+  /* ---- Timeline ---- */
+  .timeline{max-width:760px;margin:40px auto 60px;padding:0 6vw;position:relative;}
+  .timeline::before{
+    content:'';position:absolute;left:6vw;top:0;bottom:0;width:1px;
+    background:linear-gradient(180deg,transparent,var(--rose-light) 8%,var(--rose-light) 92%,transparent);
+  }
+  @media(min-width:640px){.timeline::before{left:50%;transform:translateX(-1px);}}
+  .item{
+    position:relative;margin-bottom:70px;padding-left:44px;
+    opacity:0;transform:translateY(24px);
+    transition:opacity 0.8s ease, transform 0.8s ease;
+  }
+  .item.in{opacity:1;transform:translateY(0);}
+  .item:last-child{margin-bottom:0;}
+  .item .dot{
+    position:absolute;left:6vw;top:4px;width:12px;height:12px;
+    background:var(--rose);border:3px solid var(--ivory);
+    box-shadow:0 0 0 1px var(--rose-light);border-radius:50%;
+    transform:translateX(-6.5px);
+  }
+  .item .mark{
+    font-family:'Playfair Display',serif;font-style:italic;color:var(--gold);
+    font-size:0.85rem;letter-spacing:1px;display:block;margin-bottom:6px;
+  }
+  .item h3{font-family:'Playfair Display',serif;font-size:1.35rem;color:var(--wine);margin-bottom:8px;}
+  .item p{font-size:0.95rem;line-height:1.7;opacity:0.85;}
+  @media(min-width:640px){
+    .item{width:46%;padding-left:0;padding-right:44px;}
+    .item .dot{left:auto;right:-6.5px;transform:none;}
+    .item:nth-child(even){margin-left:54%;padding-right:0;padding-left:44px;}
+    .item:nth-child(even) .dot{left:-6.5px;right:auto;}
+  }
+  .edit-note{max-width:600px;margin:0 auto 50px;text-align:center;font-size:0.82rem;color:var(--wine);opacity:0.55;padding:0 6vw;}
+
+  /* ---- Flip cards ---- */
+  .grid{
+    max-width:1100px;margin:40px auto 60px;padding:0 6vw;
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:28px;
+  }
+  .card{perspective:1200px;height:220px;}
+  .card-inner{
+    position:relative;width:100%;height:100%;
+    transition:transform 0.7s cubic-bezier(.4,.2,.2,1);
+    transform-style:preserve-3d;cursor:pointer;
+  }
+  .card:hover .card-inner, .card.flipped .card-inner{transform:rotateY(180deg);}
+  .face{
+    position:absolute;inset:0;backface-visibility:hidden;border-radius:14px;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    text-align:center;padding:24px;
+  }
+  .front{
+    background:linear-gradient(150deg,#fff 0%,var(--blush) 100%);
+    box-shadow:0 12px 30px rgba(107,15,42,0.12);
+    border:1px solid rgba(107,15,42,0.08);
+  }
+  .front .num{font-family:'Playfair Display',serif;font-style:italic;color:var(--gold);font-size:0.85rem;letter-spacing:2px;margin-bottom:10px;}
+  .front .icon{font-size:1.8rem;color:var(--rose);margin-bottom:10px;}
+  .front h3{font-family:'Playfair Display',serif;color:var(--wine);font-size:1.15rem;}
+  .back{
+    background:linear-gradient(150deg,var(--wine) 0%,#8a1c3d 100%);
+    color:#fff8ec;transform:rotateY(180deg);
+    box-shadow:0 12px 30px rgba(107,15,42,0.3);
+  }
+  .back p{font-size:0.92rem;line-height:1.6;}
+
+  .cta-row{text-align:center;padding-bottom:70px;}
+
+  /* ---- Cake ---- */
+  .cake-wrap{display:flex;flex-direction:column;align-items:center;padding:10px 6vw 10px;}
+  .cake{position:relative;width:220px;display:flex;flex-direction:column;align-items:center;}
+  .flame-row{display:flex;gap:20px;justify-content:center;margin-bottom:-6px;z-index:3;}
+  .candle{display:flex;flex-direction:column;align-items:center;}
+  .flame{
+    width:9px;height:16px;
+    background:radial-gradient(circle at 50% 70%,#fff6c8,var(--gold) 60%,var(--rose) 100%);
+    border-radius:50% 50% 50% 50% / 60% 60% 40% 40%;
+    margin-bottom:2px;
+    animation:flicker 0.7s ease-in-out infinite alternate;
+    transform-origin:bottom center;
+    transition:opacity 0.4s ease, transform 0.4s ease;
+  }
+  @keyframes flicker{
+    0%{transform:scale(1) rotate(-2deg);}
+    100%{transform:scale(1.12) rotate(2deg);}
+  }
+  .wick{width:9px;height:14px;background:var(--gold);border-radius:2px;}
+  .cake.blown .flame{opacity:0;transform:scale(0.2) translateY(6px);}
+  .smoke{position:absolute;top:-6px;width:4px;height:4px;background:rgba(120,120,120,0.4);border-radius:50%;opacity:0;}
+  .cake.blown .smoke{animation:smokeUp 1.6s ease-out forwards;}
+  @keyframes smokeUp{
+    0%{opacity:0.6;transform:translateY(0) scale(1);}
+    100%{opacity:0;transform:translateY(-40px) scale(3);}
+  }
+  .tier{width:100%;border-radius:10px 10px 4px 4px;box-shadow:inset 0 -6px 10px rgba(0,0,0,0.08);}
+  .tier1{height:34px;background:linear-gradient(180deg,#fff,var(--blush));width:70%;}
+  .tier2{height:46px;background:linear-gradient(180deg,var(--rose-light),var(--rose));width:88%;margin-top:-2px;}
+  .tier3{height:52px;background:linear-gradient(180deg,var(--rose),var(--wine));width:100%;margin-top:-2px;border-radius:4px 4px 14px 14px;}
+  .plate{width:120%;height:8px;background:var(--gold);border-radius:50%;margin-top:2px;opacity:0.7;}
+  .blow-hint{margin-top:24px;font-size:0.85rem;letter-spacing:0.5px;color:var(--wine);opacity:0.65;text-align:center;}
+  .blow-btn{margin-top:14px;font-size:0.85rem;}
+
+  .wish-card{
+    max-width:640px;margin:50px auto 30px;padding:44px 38px;
+    background:rgba(255,251,246,0.85);
+    border:1px solid rgba(107,15,42,0.1);
+    border-radius:16px;box-shadow:0 20px 50px rgba(107,15,42,0.12);
+    text-align:center;
+    opacity:0;transform:translateY(20px);
+    transition:opacity 1s ease, transform 1s ease;
+  }
+  .wish-card.show{opacity:1;transform:translateY(0);}
+  .wish-card p{
+    font-family:'Playfair Display',serif;font-style:italic;
+    font-size:1.08rem;line-height:1.85;color:var(--ink);margin-bottom:20px;
+  }
+  .sign{font-family:'Great Vibes',cursive;font-size:2rem;color:var(--rose);}
+
+  footer{text-align:center;padding:30px 6vw 50px;font-size:0.8rem;color:var(--wine);opacity:0.6;position:relative;z-index:2;}
+  .heart{display:inline-block;color:var(--rose);animation:beat 1.3s ease-in-out infinite;}
+  @keyframes beat{0%,100%{transform:scale(1);}50%{transform:scale(1.25);}}
+
+  .heart-fall{
+    position:fixed;pointer-events:none;z-index:60;color:var(--rose);font-size:20px;
+    animation:heartUp 1.8s ease-out forwards;
+  }
+  @keyframes heartUp{
+    0%{opacity:1;transform:translateY(0) scale(0.6);}
+    100%{opacity:0;transform:translateY(-160px) scale(1.4);}
+  }
+
+  /* ---- Back / forward button row ---- */
+  .nav-row{
+    display:flex;justify-content:center;gap:16px;
+    padding:10px 6vw 60px;
+    flex-wrap:wrap;
+  }
+  .btn.ghost{
+    background:transparent;
+    color:var(--wine);
+    border:1px solid rgba(107,15,42,0.3);
+    box-shadow:none;
+  }
+  .btn.ghost:hover{background:rgba(107,15,42,0.06);color:var(--wine);transform:translateY(-2px);}
+
+  @media (max-width:720px){
+    .brand-mark{font-size:0.95rem;}
+  }
+</style>
+</head>
+<body>
+
+<div class="brand-mark">M <span>&#10084;</span> A</div>
+
+<!-- ===== PAGE 1: HOME / ENVELOPE ===== -->
+<div class="page active" id="page-home">
+  <section class="hero" id="homeHero">
+    <div class="eyebrow">A Little Letter For</div>
+    <h1 class="name">Moin Akhter</h1>
+    <p class="subtitle">on his birthday, with all my love</p>
+
+    <div class="envelope-wrap">
+      <div class="envelope" id="envelope" onclick="openEnvelope()">
+        <div class="env-body"></div>
+        <div class="env-flap"></div>
+        <div class="seal">M</div>
+        <div class="letter-card">
+          <p>My dearest Moin, another year of you means another year the world got a little brighter. Press the button below to read the rest of what I have for you today...</p>
+        </div>
+      </div>
+    </div>
+    <div class="tap-hint">tap the seal to open</div>
+
+    <button class="btn" onclick="goTo('story')">Continue to Our Story &rarr;</button>
+  </section>
+</div>
+
+<!-- ===== PAGE 2: OUR STORY ===== -->
+<div class="page" id="page-story">
+  <section>
+    <header class="page-head">
+      <div class="eyebrow">Chapter One</div>
+      <h1 class="title">Our Story, So Far</h1>
+      <p class="lede">every date on this line is one I'd choose again</p>
+    </header>
+
+    <div class="timeline">
+      <div class="item">
+        <span class="dot"></span>
+        <span class="mark">Where it began</span>
+        <h3>The Day We Met</h3>
+        <p>Edit me &mdash; describe how you two first met: the place, what you noticed first, how it felt.</p>
+      </div>
+      <div class="item">
+        <span class="dot"></span>
+        <span class="mark">Early days</span>
+        <h3>The First Time I Knew</h3>
+        <p>Edit me &mdash; the moment you realized this was something real.</p>
+      </div>
+      <div class="item">
+        <span class="dot"></span>
+        <span class="mark">A favorite memory</span>
+        <h3>Our Best Trip Together</h3>
+        <p>Edit me &mdash; a trip, a night out, or a quiet day that still makes you smile.</p>
+      </div>
+      <div class="item">
+        <span class="dot"></span>
+        <span class="mark">Forever, starting now</span>
+        <h3>Today</h3>
+        <p>Edit me &mdash; a line about where you are now, and why you're glad it's with him.</p>
+      </div>
+    </div>
+    <p class="edit-note">Open this file in any text editor and replace the italic "Edit me" lines above with your real memories &mdash; that's the only part built for you to personalize.</p>
+    <div class="nav-row">
+      <button class="btn" onclick="goTo('reasons')">Next: Reasons I Love You &rarr;</button>
+    </div>
+  </section>
+</div>
+
+<!-- ===== PAGE 3: REASONS I LOVE YOU ===== -->
+<div class="page" id="page-reasons">
+  <section>
+    <header class="page-head">
+      <div class="eyebrow">Chapter Two</div>
+      <h1 class="title">Reasons I Love You</h1>
+      <p class="lede">a few of the many, Moin</p>
+      <p class="hint">tap or hover a card to flip it</p>
+    </header>
+
+    <div class="grid">
+      <div class="card"><div class="card-inner">
+        <div class="face front"><span class="num">01</span><span class="icon">&#9825;</span><h3>Your Kindness</h3></div>
+        <div class="face back"><p>The way you take care of everyone around you, quietly, without ever asking for anything back.</p></div>
+      </div></div>
+
+      <div class="card"><div class="card-inner">
+        <div class="face front"><span class="num">02</span><span class="icon">&#128513;</span><h3>Your Laugh</h3></div>
+        <div class="face back"><p>It's the first thing that made me fall for you, and it still fixes my worst days.</p></div>
+      </div></div>
+
+      <div class="card"><div class="card-inner">
+        <div class="face front"><span class="num">03</span><span class="icon">&#128170;</span><h3>Your Strength</h3></div>
+        <div class="face back"><p>How steady you stay for us, even when things get hard. I see how much you carry.</p></div>
+      </div></div>
+
+      <div class="card"><div class="card-inner">
+        <div class="face front"><span class="num">04</span><span class="icon">&#127775;</span><h3>Your Ambition</h3></div>
+        <div class="face back"><p>You dream big and work quietly toward it every single day. I'm so proud of you.</p></div>
+      </div></div>
+
+      <div class="card"><div class="card-inner">
+        <div class="face front"><span class="num">05</span><span class="icon">&#127836;</span><h3>The Little Things</h3></div>
+        <div class="face back"><p>How you remember what I like, notice when I'm off, and show up without me asking.</p></div>
+      </div></div>
+
+      <div class="card"><div class="card-inner">
+        <div class="face front"><span class="num">06</span><span class="icon">&#128149;</span><h3>Simply, You</h3></div>
+        <div class="face back"><p>Out of everyone, I still choose you &mdash; today, and every day after this one.</p></div>
+      </div></div>
+    </div>
+
+    <div class="nav-row">
+      <button class="btn" onclick="goTo('wish')">Read My Birthday Wish &rarr;</button>
+    </div>
+  </section>
+</div>
+
+<!-- ===== PAGE 4: BIRTHDAY WISH / CAKE ===== -->
+<div class="page" id="page-wish">
+  <section>
+    <header class="page-head">
+      <div class="eyebrow">Chapter Three</div>
+      <h1 class="title script">Make a Wish, Moin</h1>
+    </header>
+
+    <div class="cake-wrap">
+      <div class="cake" id="cake">
+        <div class="flame-row">
+          <div class="candle"><div class="flame"></div><div class="smoke"></div><div class="wick"></div></div>
+          <div class="candle"><div class="flame"></div><div class="smoke"></div><div class="wick"></div></div>
+          <div class="candle"><div class="flame"></div><div class="smoke"></div><div class="wick"></div></div>
+        </div>
+        <div class="tier tier1"></div>
+        <div class="tier tier2"></div>
+        <div class="tier tier3"></div>
+        <div class="plate"></div>
+      </div>
+      <p class="blow-hint">click the button to blow out the candles</p>
+      <button class="btn blow-btn" onclick="blowCandles()">Blow Out the Candles</button>
+    </div>
+
+    <div class="wish-card" id="wishCard">
+      <p>Happy Birthday, Moin. Another year has passed, and somehow you keep becoming more of everything I love &mdash; kinder, steadier, more you. I hope this year brings you every quiet joy you deserve and a few loud ones too. Whatever you wished for just now, I hope it comes true, and if it didn't &mdash; I'm already working on giving it to you myself. I love you, today and always.</p>
+      <div class="sign">Your wife</div>
+    </div>
+  </section>
+</div>
+
+<footer>Made with <span class="heart">&#10084;</span> for Moin &mdash; Happy Birthday</footer>
+
+<script>
+  // Page switching
+  function goTo(pageName){
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+    document.getElementById('page-'+pageName).classList.add('active');
+    window.scrollTo({top:0, behavior:'smooth'});
+
+    // re-trigger timeline reveal check when navigating to story page
+    if(pageName === 'story'){ checkTimelineReveal(); }
+  }
+
+  // Envelope open
+  function openEnvelope(){
+    document.getElementById('envelope').classList.add('open');
+    document.getElementById('homeHero').classList.add('opened');
+  }
+
+  // Floating petals (ambient, whole site)
+  function makePetal(){
+    const p = document.createElement('div');
+    p.className = 'petal';
+    p.style.left = Math.random()*100 + 'vw';
+    const size = 10 + Math.random()*10;
+    p.style.width = size+'px';
+    p.style.height = size+'px';
+    p.style.background = Math.random() > 0.5 ? 'var(--rose)' : 'var(--rose-light)';
+    const duration = 7 + Math.random()*6;
+    p.style.animationDuration = duration+'s';
+    document.body.appendChild(p);
+    setTimeout(()=>p.remove(), duration*1000);
+  }
+  setInterval(makePetal, 900);
+  for(let i=0;i<6;i++) setTimeout(makePetal, i*300);
+
+  // Timeline reveal (works even without scroll, since items may already be in view)
+  function checkTimelineReveal(){
+    document.querySelectorAll('.item').forEach(item=>{
+      const rect = item.getBoundingClientRect();
+      if(rect.top < window.innerHeight - 60){ item.classList.add('in'); }
+    });
+  }
+  const obs = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('in'); });
+  },{threshold:0.15});
+  document.querySelectorAll('.item').forEach(i=>obs.observe(i));
+
+  // Flip cards
+  document.querySelectorAll('.card').forEach(c=>{
+    c.addEventListener('click',()=>c.classList.toggle('flipped'));
+  });
+
+  // Blow out candles
+  let blown = false;
+  function blowCandles(){
+    if(blown) return;
+    blown = true;
+    document.getElementById('cake').classList.add('blown');
+    document.getElementById('wishCard').classList.add('show');
+    spawnHearts();
+  }
+  function spawnHearts(){
+    for(let i=0;i<26;i++){
+      setTimeout(()=>{
+        const h=document.createElement('div');
+        h.className='heart-fall';
+        h.innerHTML='&#10084;';
+        h.style.left=(20+Math.random()*60)+'vw';
+        h.style.top=(40+Math.random()*20)+'vh';
+        h.style.color = Math.random()>0.5 ? '#E85D75':'#C9A66B';
+        document.body.appendChild(h);
+        setTimeout(()=>h.remove(),1800);
+      }, i*60);
+    }
+  }
+</script>
+
+</body>
+</html>
