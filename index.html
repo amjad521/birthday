@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Happy Birthday, Moin</title>
+<title>Happy Birthday, Papa &mdash; Moin Akhter</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
@@ -14,6 +14,7 @@
     --blush:#FBE4E8;
     --ivory:#FFFBF6;
     --gold:#C9A66B;
+    --marigold:#E8A33D;
     --ink:#3B1220;
   }
   *{box-sizing:border-box;margin:0;padding:0;}
@@ -32,6 +33,17 @@
     background:var(--rose);border-radius:0 100% 0 100%;
     opacity:0.7;pointer-events:none;z-index:1;
     animation:fall linear forwards;
+  }
+  .petal.spark{
+    width:auto;height:auto;background:none;
+    color:var(--marigold);
+    opacity:0.8;
+    text-shadow:0 0 6px rgba(232,163,61,0.4);
+    animation:fall linear forwards, twinkle 1.4s ease-in-out infinite;
+  }
+  @keyframes twinkle{
+    0%,100%{opacity:0.4;}
+    50%{opacity:0.9;}
   }
   @keyframes fall{
     0%{transform:translateY(0) rotate(0deg);}
@@ -243,6 +255,81 @@
 
   .cta-row{text-align:center;padding-bottom:70px;}
 
+  /* ---- Letter block (For My Papa page) ---- */
+  .letter-block{
+    max-width:680px;
+    margin:30px auto 20px;
+    padding:46px 42px 38px;
+    background:rgba(255,251,246,0.85);
+    border:1px solid rgba(107,15,42,0.1);
+    border-radius:18px;
+    box-shadow:0 20px 50px rgba(107,15,42,0.12);
+    position:relative;
+  }
+  .quote-mark{
+    position:absolute;
+    top:-8px;left:28px;
+    font-family:'Playfair Display',serif;
+    font-size:3.4rem;
+    color:var(--marigold);
+    opacity:0.5;
+    line-height:1;
+  }
+  .letter-block p{
+    font-family:'Playfair Display',serif;
+    font-style:italic;
+    font-size:1.08rem;
+    line-height:1.9;
+    color:var(--ink);
+    text-align:center;
+  }
+  .promise-intro{
+    text-align:center;
+    font-family:'Playfair Display',serif;
+    font-style:italic;
+    color:var(--wine);
+    opacity:0.8;
+    font-size:1rem;
+    margin:44px 0 6px;
+  }
+  .promise-grid{
+    max-width:920px;
+    margin:20px auto 50px;
+    padding:0 6vw;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+    gap:22px;
+  }
+  .promise-item{
+    background:linear-gradient(150deg,#fff 0%,var(--blush) 100%);
+    border:1px solid rgba(107,15,42,0.08);
+    border-radius:14px;
+    padding:28px 20px;
+    text-align:center;
+    box-shadow:0 10px 26px rgba(107,15,42,0.1);
+    transition:transform 0.35s ease, box-shadow 0.35s ease;
+  }
+  .promise-item:hover{
+    transform:translateY(-6px);
+    box-shadow:0 18px 36px rgba(107,15,42,0.2);
+  }
+  .promise-item .p-icon{
+    font-size:1.8rem;
+    display:block;
+    margin-bottom:12px;
+  }
+  .promise-item h3{
+    font-family:'Playfair Display',serif;
+    color:var(--wine);
+    font-size:1.05rem;
+    margin-bottom:8px;
+  }
+  .promise-item p{
+    font-size:0.88rem;
+    line-height:1.65;
+    opacity:0.85;
+  }
+
   /* ---- Cake ---- */
   .cake-wrap{display:flex;flex-direction:column;align-items:center;padding:10px 6vw 10px;}
   .cake{position:relative;width:220px;display:flex;flex-direction:column;align-items:center;}
@@ -327,14 +414,14 @@
 </head>
 <body>
 
-<div class="brand-mark">M <span>&#10084;</span> A</div>
+<div class="brand-mark">I <span>&#10084;</span> M</div>
 
 <!-- ===== PAGE 1: HOME / ENVELOPE ===== -->
 <div class="page active" id="page-home">
   <section class="hero" id="homeHero">
-    <div class="eyebrow">A Little Letter For</div>
+    <div class="eyebrow">A Birthday Letter For</div>
     <h1 class="name">Moin Akhter</h1>
-    <p class="subtitle">on his birthday, with all my love</p>
+    <p class="subtitle">from your daughter, Irha, with all my love</p>
 
     <div class="envelope-wrap">
       <div class="envelope" id="envelope" onclick="openEnvelope()">
@@ -342,98 +429,28 @@
         <div class="env-flap"></div>
         <div class="seal">M</div>
         <div class="letter-card">
-          <p>My dearest Moin, another year of you means another year the world got a little brighter. Press the button below to read the rest of what I have for you today...</p>
+          <p>Dear Papa, another year of you means another year of your love, your strength, and everything you quietly do for us. Press the button below to read the rest of what I have for you today...</p>
         </div>
       </div>
     </div>
     <div class="tap-hint">tap the seal to open</div>
 
-    <button class="btn" onclick="goTo('story')">Continue to Our Story &rarr;</button>
+    <button class="btn" onclick="goTo('love')">Continue to Read My Letter &rarr;</button>
   </section>
 </div>
 
-<!-- ===== PAGE 2: OUR STORY ===== -->
-<div class="page" id="page-story">
+<!-- ===== PAGE 2: FOR MY PAPA (LOVE & CARE) ===== -->
+<div class="page" id="page-love">
   <section>
     <header class="page-head">
       <div class="eyebrow">Chapter One</div>
-      <h1 class="title">Our Story, So Far</h1>
-      <p class="lede">every date on this line is one I'd choose again</p>
+      <h1 class="title">For My Papa, With Love</h1>
+      <p class="lede">a little of what's in my heart, Papa</p>
     </header>
 
-    <div class="timeline">
-      <div class="item">
-        <span class="dot"></span>
-        <span class="mark">Where it began</span>
-        <h3>The Day We Met</h3>
-        <p>Edit me &mdash; describe how you two first met: the place, what you noticed first, how it felt.</p>
-      </div>
-      <div class="item">
-        <span class="dot"></span>
-        <span class="mark">Early days</span>
-        <h3>The First Time I Knew</h3>
-        <p>Edit me &mdash; the moment you realized this was something real.</p>
-      </div>
-      <div class="item">
-        <span class="dot"></span>
-        <span class="mark">A favorite memory</span>
-        <h3>Our Best Trip Together</h3>
-        <p>Edit me &mdash; a trip, a night out, or a quiet day that still makes you smile.</p>
-      </div>
-      <div class="item">
-        <span class="dot"></span>
-        <span class="mark">Forever, starting now</span>
-        <h3>Today</h3>
-        <p>Edit me &mdash; a line about where you are now, and why you're glad it's with him.</p>
-      </div>
-    </div>
-    <p class="edit-note">Open this file in any text editor and replace the italic "Edit me" lines above with your real memories &mdash; that's the only part built for you to personalize.</p>
-    <div class="nav-row">
-      <button class="btn" onclick="goTo('reasons')">Next: Reasons I Love You &rarr;</button>
-    </div>
-  </section>
-</div>
-
-<!-- ===== PAGE 3: REASONS I LOVE YOU ===== -->
-<div class="page" id="page-reasons">
-  <section>
-    <header class="page-head">
-      <div class="eyebrow">Chapter Two</div>
-      <h1 class="title">Reasons I Love You</h1>
-      <p class="lede">a few of the many, Moin</p>
-      <p class="hint">tap or hover a card to flip it</p>
-    </header>
-
-    <div class="grid">
-      <div class="card"><div class="card-inner">
-        <div class="face front"><span class="num">01</span><span class="icon">&#9825;</span><h3>Your Kindness</h3></div>
-        <div class="face back"><p>The way you take care of everyone around you, quietly, without ever asking for anything back.</p></div>
-      </div></div>
-
-      <div class="card"><div class="card-inner">
-        <div class="face front"><span class="num">02</span><span class="icon">&#128513;</span><h3>Your Laugh</h3></div>
-        <div class="face back"><p>It's the first thing that made me fall for you, and it still fixes my worst days.</p></div>
-      </div></div>
-
-      <div class="card"><div class="card-inner">
-        <div class="face front"><span class="num">03</span><span class="icon">&#128170;</span><h3>Your Strength</h3></div>
-        <div class="face back"><p>How steady you stay for us, even when things get hard. I see how much you carry.</p></div>
-      </div></div>
-
-      <div class="card"><div class="card-inner">
-        <div class="face front"><span class="num">04</span><span class="icon">&#127775;</span><h3>Your Ambition</h3></div>
-        <div class="face back"><p>You dream big and work quietly toward it every single day. I'm so proud of you.</p></div>
-      </div></div>
-
-      <div class="card"><div class="card-inner">
-        <div class="face front"><span class="num">05</span><span class="icon">&#127836;</span><h3>The Little Things</h3></div>
-        <div class="face back"><p>How you remember what I like, notice when I'm off, and show up without me asking.</p></div>
-      </div></div>
-
-      <div class="card"><div class="card-inner">
-        <div class="face front"><span class="num">06</span><span class="icon">&#128149;</span><h3>Simply, You</h3></div>
-        <div class="face back"><p>Out of everyone, I still choose you &mdash; today, and every day after this one.</p></div>
-      </div></div>
+    <div class="letter-block">
+      <span class="quote-mark">&#10077;</span>
+      <p>Papa, from the day I was born, you've been my first hero, my safest place, and my biggest cheerleader. Every time life got hard, you were the one who showed up, no questions asked. You taught me to be brave by being brave yourself, and to love fiercely by loving all of us the same way. I hope one day I can be even a small part of the parent you've been to me. Thank you for every quiet sacrifice, every late night, and every hug that made the whole world feel safe again. I love you more than words can really hold, Papa.</p>
     </div>
 
     <div class="nav-row">
@@ -442,12 +459,13 @@
   </section>
 </div>
 
-<!-- ===== PAGE 4: BIRTHDAY WISH / CAKE ===== -->
+<!-- ===== PAGE 3: BIRTHDAY WISH / CAKE ===== -->
 <div class="page" id="page-wish">
   <section>
     <header class="page-head">
-      <div class="eyebrow">Chapter Three</div>
-      <h1 class="title script">Make a Wish, Moin</h1>
+      <div class="eyebrow">Chapter Two</div>
+      <h1 class="title script">Make a Wish, Papa</h1>
+      <p class="lede">every candle is a year I've been lucky to call you mine</p>
     </header>
 
     <div class="cake-wrap">
@@ -467,13 +485,13 @@
     </div>
 
     <div class="wish-card" id="wishCard">
-      <p>Happy Birthday, Moin. Another year has passed, and somehow you keep becoming more of everything I love &mdash; kinder, steadier, more you. I hope this year brings you every quiet joy you deserve and a few loud ones too. Whatever you wished for just now, I hope it comes true, and if it didn't &mdash; I'm already working on giving it to you myself. I love you, today and always.</p>
-      <div class="sign">Your wife</div>
+      <p>Happy Birthday, Papa. Another year has passed, and somehow you keep being everything this family needs &mdash; steady, kind, and endlessly patient with all of us. I hope this year brings you every quiet joy you deserve and a few loud ones too. Whatever you wished for just now, I hope it comes true, and if it didn't &mdash; I'll do my best to help make it happen. I love you, today and always.</p>
+      <div class="sign">Your loving daughter, Irha</div>
     </div>
   </section>
 </div>
 
-<footer>Made with <span class="heart">&#10084;</span> for Moin &mdash; Happy Birthday</footer>
+<footer>Made with <span class="heart">&#10084;</span> by Irha Sheikh for her Papa &mdash; Happy Birthday</footer>
 
 <script>
   // Page switching
@@ -481,9 +499,6 @@
     document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
     document.getElementById('page-'+pageName).classList.add('active');
     window.scrollTo({top:0, behavior:'smooth'});
-
-    // re-trigger timeline reveal check when navigating to story page
-    if(pageName === 'story'){ checkTimelineReveal(); }
   }
 
   // Envelope open
@@ -494,37 +509,34 @@
 
   // Floating petals (ambient, whole site)
   function makePetal(){
-    const p = document.createElement('div');
-    p.className = 'petal';
-    p.style.left = Math.random()*100 + 'vw';
-    const size = 10 + Math.random()*10;
-    p.style.width = size+'px';
-    p.style.height = size+'px';
-    p.style.background = Math.random() > 0.5 ? 'var(--rose)' : 'var(--rose-light)';
-    const duration = 7 + Math.random()*6;
-    p.style.animationDuration = duration+'s';
-    document.body.appendChild(p);
-    setTimeout(()=>p.remove(), duration*1000);
+    const isSpark = Math.random() > 0.55;
+    if(isSpark){
+      const s = document.createElement('div');
+      s.className = 'petal spark';
+      s.style.left = Math.random()*100 + 'vw';
+      s.innerHTML = '&#10022;';
+      const size = 12 + Math.random()*8;
+      s.style.fontSize = size+'px';
+      const duration = 7 + Math.random()*6;
+      s.style.animationDuration = duration+'s';
+      document.body.appendChild(s);
+      setTimeout(()=>s.remove(), duration*1000);
+    } else {
+      const p = document.createElement('div');
+      p.className = 'petal';
+      p.style.left = Math.random()*100 + 'vw';
+      const size = 9 + Math.random()*8;
+      p.style.width = size+'px';
+      p.style.height = size+'px';
+      p.style.background = Math.random() > 0.5 ? 'var(--rose-light)' : 'var(--blush)';
+      const duration = 7 + Math.random()*6;
+      p.style.animationDuration = duration+'s';
+      document.body.appendChild(p);
+      setTimeout(()=>p.remove(), duration*1000);
+    }
   }
   setInterval(makePetal, 900);
   for(let i=0;i<6;i++) setTimeout(makePetal, i*300);
-
-  // Timeline reveal (works even without scroll, since items may already be in view)
-  function checkTimelineReveal(){
-    document.querySelectorAll('.item').forEach(item=>{
-      const rect = item.getBoundingClientRect();
-      if(rect.top < window.innerHeight - 60){ item.classList.add('in'); }
-    });
-  }
-  const obs = new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('in'); });
-  },{threshold:0.15});
-  document.querySelectorAll('.item').forEach(i=>obs.observe(i));
-
-  // Flip cards
-  document.querySelectorAll('.card').forEach(c=>{
-    c.addEventListener('click',()=>c.classList.toggle('flipped'));
-  });
 
   // Blow out candles
   let blown = false;
